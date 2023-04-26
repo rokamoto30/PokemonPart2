@@ -28,7 +28,7 @@ public class User implements Serializable{
 	private String password;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "caught", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
 	private List<Caught> caught;
 	
 	public User() {}
