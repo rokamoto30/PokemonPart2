@@ -27,7 +27,7 @@ public class Pokemon implements Serializable{
 	private String pokemonName;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "caught", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "pokemon", cascade=CascadeType.ALL)
 	private List<Caught> caught;
 	
 	public Pokemon() {}
