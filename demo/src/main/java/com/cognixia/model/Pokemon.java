@@ -1,12 +1,19 @@
 package com.cognixia.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Pokemon implements Serializable{
@@ -18,6 +25,10 @@ public class Pokemon implements Serializable{
 	
 	@Column(nullable = false)
 	private String pokemonName;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "caught", cascade=CascadeType.ALL)
+	private List<Caught> caught;
 	
 	public Pokemon() {}
 
