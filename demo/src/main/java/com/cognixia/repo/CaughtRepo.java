@@ -1,6 +1,7 @@
 package com.cognixia.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,6 @@ public interface CaughtRepo extends JpaRepository<Caught, Integer> {
 	public List<Caught> getUncompleted(Integer id);
 	
 	@Query(value="SELECT c.* FROM caught c WHERE c.user_id = ?1 AND c.pokemon_id = ?2", nativeQuery = true)
-	public List<Caught> search(Integer id, Integer pokemonId);
+	public Optional<Caught> search(Integer id, Integer pokemonId);
 
 }
