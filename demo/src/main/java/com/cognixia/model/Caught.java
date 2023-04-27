@@ -28,6 +28,8 @@ public class Caught implements Serializable{
 	@Column(nullable=false)
 	private boolean completed;
 	
+	@Column(nullable=false)
+	private String pokemonName;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -40,12 +42,13 @@ public class Caught implements Serializable{
 	private User username;
 
 	public Caught() {}
-	
-	public Caught(Integer id, int level, boolean completed, Pokemon pokemon, User username) {
+
+	public Caught(Integer id, int level, boolean completed, String pokemonName, Pokemon pokemon, User username) {
 		super();
 		this.id = id;
 		this.level = level;
 		this.completed = completed;
+		this.pokemonName = pokemonName;
 		this.pokemon = pokemon;
 		this.username = username;
 	}
@@ -74,6 +77,14 @@ public class Caught implements Serializable{
 		this.completed = completed;
 	}
 
+	public String getPokemonName() {
+		return pokemonName;
+	}
+
+	public void setPokemonName(String pokemonName) {
+		this.pokemonName = pokemonName;
+	}
+
 	public Pokemon getPokemon() {
 		return pokemon;
 	}
@@ -92,11 +103,7 @@ public class Caught implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Caught [id=" + id + ", level=" + level + ", completed=" + completed + ", pokemon=" + pokemon
-				+ ", username=" + username + "]";
+		return "Caught [id=" + id + ", level=" + level + ", completed=" + completed + ", pokemonName=" + pokemonName
+				+ ", pokemon=" + pokemon + ", username=" + username + "]";
 	}
-	
-	
-	
-	
 }

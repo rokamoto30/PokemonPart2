@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cognixia.model.Caught;
+
+import jakarta.transaction.Transactional;
 
 
 @Repository
@@ -21,5 +24,9 @@ public interface CaughtRepo extends JpaRepository<Caught, Integer> {
 	
 	@Query(value="SELECT c.* FROM caught c WHERE c.user_id = ?1 AND c.pokemon_id = ?2", nativeQuery = true)
 	public Optional<Caught> search(Integer id, Integer pokemonId);
-
+	
+	@Modifying
+    @Transactional
+    @Query(value = "TRUNCATE TABLE caught", nativeQuery = true)
+    void truncateTable();
 }

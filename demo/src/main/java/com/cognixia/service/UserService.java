@@ -1,14 +1,12 @@
 package com.cognixia.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cognixia.exception.InvalidException;
-import com.cognixia.model.Caught;
-import com.cognixia.model.Pokemon;
+import com.cognixia.exception.InvalidLoginException;
 import com.cognixia.model.User;
 import com.cognixia.repo.UserRepo;
 
@@ -26,12 +24,12 @@ public class UserService {
 		return found.get();
 	}
 	
-	public User login(String username, String password) throws InvalidException {
+	public User login(String username, String password) throws InvalidLoginException, InvalidException {
 		User user = getUser(username);
 		if (user.getPassword().equals(password)) {
 			return user;
 		} else {
-			throw new InvalidException("Password doesn't exist");
+			throw new InvalidLoginException("Password doesn't exist");
 		}
 	}
 	
