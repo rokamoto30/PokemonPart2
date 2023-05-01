@@ -12,10 +12,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public class Request {
+	private static String BASE_URI = "http://localhost:8080/api";
 		
 	public static String send(String endpoint, String method) throws ApiException {
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(endpoint))
+				.uri(URI.create(BASE_URI + endpoint))
 				.method(method, HttpRequest.BodyPublishers.noBody())
 				.build();
 		HttpResponse<String> response = null;
