@@ -9,16 +9,16 @@ public class Caught implements Serializable{
 
 	private Integer id;
 
-	private int level; 
+	private Integer level; 
 	
 
-	private boolean completed;
+	private Boolean completed;
 	
 	private String pokemonName;
 
 	public Caught() {}
 
-	public Caught(Integer id, int level, boolean completed, String pokemonName) {
+	public Caught(Integer id, Integer level, Boolean completed, String pokemonName) {
 		super();
 		this.id = id;
 		this.level = level;
@@ -34,19 +34,19 @@ public class Caught implements Serializable{
 		this.id = id;
 	}
 
-	public int getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 
-	public boolean isCompleted() {
+	public Boolean isCompleted() {
 		return completed;
 	}
 
-	public void setCompleted(boolean completed) {
+	public void setCompleted(Boolean completed) {
 		this.completed = completed;
 	}
 
