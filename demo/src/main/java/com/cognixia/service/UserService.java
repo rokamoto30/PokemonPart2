@@ -29,7 +29,7 @@ public class UserService {
 		if (user.getPassword().equals(password)) {
 			return user;
 		} else {
-			throw new InvalidLoginException("Password doesn't exist");
+			throw new InvalidLoginException("Password doesn't match");
 		}
 	}
 	
