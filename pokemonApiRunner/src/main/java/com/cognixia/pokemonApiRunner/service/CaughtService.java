@@ -13,6 +13,11 @@ import com.cognixia.pokemonApiRunner.network.Request;
 
 
 public class CaughtService {
+	public static void appPrint(String text) {
+		System.out.println(TextColor.greenText() + text + TextColor.clearText() + ":");
+		TextColor.blue();
+	}
+	
 	public static Caught[] getCollection(String username) throws Exception {
 		if(username == null) {
 			throw new ApiException("Must be logged int ot use this method!");
@@ -26,8 +31,9 @@ public class CaughtService {
 		if(username == null) {
 			throw new ApiException("Must be logged int ot use this method!");
 		}
-		System.out.println("Enter pokemon name:");
+		appPrint("Enter pokemon name");
 		String pokemonName = sc.nextLine();
+		TextColor.clear();
 		String endpoint = String.format("/caught/search/%s/%s", username, pokemonName);
 		String response = Request.send(endpoint, "GET");
 		return Request.parse(response, Caught.class);	
@@ -37,10 +43,14 @@ public class CaughtService {
 		if(username == null) {
 			throw new ApiException("Must be logged int ot use this method!");
 		}
-		System.out.println("Enter pokemon name:");
+		
+		appPrint("Enter pokemon name");
 		String pokemonName = sc.nextLine();
-		System.out.println("Enter pokemon level:");
+		appPrint("Enter pokemon level");
 		Integer level = sc.nextInt();
+		sc.nextLine();
+		TextColor.clear();
+		
 		String endpoint = String.format("/caught/level/%s/%s/%s", username, pokemonName, level);
 		String response = Request.send(endpoint, "PUT");
 		return Request.parse(response, Caught.class);	
@@ -59,11 +69,13 @@ public class CaughtService {
 		if(username == null) {
 			throw new ApiException("Must be logged int ot use this method!");
 		}
-		System.out.println("Enter pokemon name:");
+		appPrint("Enter pokemon name");
 		String pokemonName = sc.nextLine();
-		System.out.println("Enter pokemon level:");
+		appPrint("Enter pokemon level");
 		Integer level = sc.nextInt();
 		sc.nextLine();
+		TextColor.clear();
+		
 		String endpoint = String.format("/caught/catch/%s/%s/%s", username, pokemonName, level);
 		String response = Request.send(endpoint, "POST");
 		return Request.parse(response, Caught.class);	
@@ -125,13 +137,17 @@ public class CaughtService {
 			}
 		}
 		
-		String header = String.format("| %-" + maxNameLen +"s | %-" + maxLevelLen +"s | %-" + maxCompletedLen + "s|\n", name, level, completed);
-		String breaker = "=".repeat(header.length()-1) + "\n";
+		String header = String.format("| " + TextColor.yellowText() + "%-" + maxNameLen +"s " + TextColor.clearText() + "| " + TextColor.greenText() + "%-" + maxLevelLen +"s " + TextColor.clearText() + "| " + TextColor.greenText() + "%-" + maxCompletedLen + "s " + TextColor.clearText() + "|\n", name, level, completed);
+		String breaker = "=".repeat(header.length()-1-(6*5)) + "\n";
 		table.append(breaker);
 		table.append(header);
 		table.append(breaker);
 		for (Caught pokemon : caught) {
-			table.append(String.format("| %-" + maxNameLen +"s | %-" + maxLevelLen +"s | %-" + maxCompletedLen + "s|\n", pokemon.getPokemonName(), pokemon.getLevel(), pokemon.isCompleted()));
+			if (pokemon.isCompleted()) {
+				table.append(String.format("| " + TextColor.yellowText() + "%-" + maxNameLen +"s " + TextColor.clearText() + "| " + TextColor.greenText() + "%-" + maxLevelLen +"s " + TextColor.clearText() + "| " + TextColor.greenText() + "%-" + maxCompletedLen + "s " + TextColor.clearText() + "|\n", pokemon.getPokemonName(), pokemon.getLevel(), pokemon.isCompleted()));
+			} else {
+				table.append(String.format("| " + TextColor.yellowText() + "%-" + maxNameLen +"s " + TextColor.clearText() + "| " + TextColor.greenText() + "%-" + maxLevelLen +"s " + TextColor.clearText() + "| " + TextColor.redText() + "%-" + maxCompletedLen + "s " + TextColor.clearText() + "|\n", pokemon.getPokemonName(), pokemon.getLevel(), pokemon.isCompleted()));
+			}
 		}
 		table.append(breaker);
 		return table;

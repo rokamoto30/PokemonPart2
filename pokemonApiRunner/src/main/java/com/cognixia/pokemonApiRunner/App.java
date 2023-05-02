@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import com.cognixia.pokemonApiRunner.model.Caught;
@@ -60,12 +59,12 @@ public class App
     }
     public static StringBuilder tableFormat(String[] commands){
     	int commandMaxLen = 25;
-    	int breakerLen = 35;
+    	int breakerLen = 36;
     	StringBuilder table = new StringBuilder();
     	String breaker = "=".repeat(breakerLen) + "\n";
     	table.append(breaker);
     	for (int i = 0; i < commands.length; i++) {
-    		table.append( String.format("| %-" + 3 +"s | %-" + commandMaxLen +"s |\n", i+1, commands[i]) );
+    		table.append( String.format("| " + TextColor.blueText() + "%-" + 3 +"s " + TextColor.clearText() + " | " + TextColor.blueText() + "%-" + commandMaxLen +"s " + TextColor.clearText() + "|\n", i+1, commands[i]) );
     	}
     	table.append(breaker);
 		return table;
@@ -79,25 +78,30 @@ public class App
     public static void runner() {
     	sc = new Scanner(System.in);
     	
+    	TextColor.yellow();
     	icon();
+    	TextColor.clear();
 		
     	readCookie();
 				
     	boolean running = true;
 		while (running) {
+			TextColor.green();
 			if (curUser == null) {
-				System.out.print("Logged Out> ");
+				System.out.print("Logged Out");
 			} else {
-				System.out.print(curUser + "> ");
+				System.out.print(curUser);
 			}
+			TextColor.clear();
+			System.out.print("> ");
 			String command = sc.nextLine(); 
 			Caught[] caughtCollection;
 			Pokemon[] pokemonCollection;
 			try {
 				switch(command.toLowerCase()) {
 					case "help":
-						String[] commands = {"login", "create user", "logout", "get collection", "catch pokemon", "level pokemon", "search pokemon", "get uncompleted pokemon", "get pokemon", "get uncaught pokemon", "populate db", "clear db", "exit"};
-						System.out.println(tableFormat(commands) );
+						String[] commands = {"login", "create user", "logout", "get collection", "catch", "level", "search", "get uncompleted", "get pokemon", "get uncaught", "populate db", "clear db", "exit"};
+						System.out.print(tableFormat(commands) );
 
 						break;
 						
@@ -122,26 +126,26 @@ public class App
 					case "4":
 					case "get collection":
 						caughtCollection = CaughtService.getCollection(curUser);
-						System.out.println(CaughtService.tableFormat(caughtCollection));
+						System.out.print(CaughtService.tableFormat(caughtCollection));
 						break;
 					case "5":
-					case "catch pokemon":
+					case "catch":
 						CaughtService.catchPokemon(sc, curUser);
 						break;
 					case "6":
-					case "level pokemon":
+					case "level":
 						CaughtService.level(sc, curUser);
 						break;
 					case "7":
-					case "search pokemon":
+					case "search":
 						Caught found = CaughtService.search(sc, curUser);
 						Caught[] foundReal = {found};
-						System.out.println(CaughtService.tableFormat( foundReal ));
+						System.out.print(CaughtService.tableFormat( foundReal ));
 						break;
 					case "8":
-					case "get uncompleted pokemon":
+					case "get uncompleted":
 						caughtCollection = CaughtService.getUncompleted(curUser);
-						System.out.println(CaughtService.tableFormat(caughtCollection));
+						System.out.print(CaughtService.tableFormat(caughtCollection));
 						break;
 						
 					case "9":
@@ -153,7 +157,7 @@ public class App
 						break;
 					
 					case "10":
-					case "get uncaught pokemon":
+					case "get uncaught":
 						pokemonCollection = CaughtService.getUncaught(curUser);
 						for (Pokemon pokemon : pokemonCollection) {
 							System.out.println(pokemon.getPokemonName());
@@ -179,7 +183,9 @@ public class App
 						break;
 				}
 			} catch (Exception e) {
+				TextColor.red();
 				System.out.println(e.getMessage());
+				TextColor.clear();
 			}
 			
 		}
